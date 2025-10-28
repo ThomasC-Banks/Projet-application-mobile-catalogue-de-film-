@@ -1,35 +1,38 @@
-// In App.js in a new project
-
 import * as React from 'react';
-import { View, Text, StyleSheet} from 'react-native';
-import { createStaticNavigation } from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Text, StyleSheet } from 'react-native';
+
+const Stack = createNativeStackNavigator();
 
 function HomeScreen() {
   return (
-    <View style={styles.container}>
-      <Text>Welcome</Text>
-    </View>
+    <LinearGradient colors={['#eacaf0ff', '#cc6bafff']} style={styles.container}>
+      <Text style={styles.text}>Welcome</Text>
+    </LinearGradient>
   );
 }
 
-const RootStack = createNativeStackNavigator({
-  screens: {
-    Home: HomeScreen,
-  },
-});
-
-const Navigation = createStaticNavigation(RootStack);
+export default function App() {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Home" component={HomeScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#dc94e6ff',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  text: {
+    color: 'white',
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
 });
-
-export default function App() {
-  return <Navigation />;
-}
