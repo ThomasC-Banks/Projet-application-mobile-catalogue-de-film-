@@ -1,21 +1,13 @@
 import * as React from 'react';
-import { Text, StyleSheet, Image } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
+import { Image, Text, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const Stack = createNativeStackNavigator();
+import Home from './pages/Home';
+import Catalog from './pages/Catalog';
+import Login from './pages/Login';
 
-function HomeScreen() {
-  return (
-    <LinearGradient
-      colors={['#ffd6e8', '#f5a9d0']}
-      style={styles.container}
-    >
-      <Text style={styles.text}>Welcome</Text>
-    </LinearGradient>
-  );
-}
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
@@ -23,37 +15,26 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen
           name="Home"
-          component={HomeScreen}
-          options={{
-            title: 'Home',
+          component={Home}
+          options={({ navigation }) => ({
+            title: '',
+            headerTransparent: true,
+            headerLeft: () => (
+              <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginLeft: 2 }}>
+                <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold' }}>Login</Text>
+              </TouchableOpacity>
+            ),
             headerRight: () => (
               <Image
-                source={require('./assets/profile.jpg')}
-                style={{
-                  width: 50,
-                  height: 50,
-                  borderRadius: 15,
-                  marginRight: 10,
-                }}
+                source={require('./assets/kitty.jpg')}
+                style={{ width: 40, height: 37, borderRadius: 17, marginRight: 1 }}
               />
             ),
-          }}
+          })}
         />
+        <Stack.Screen name="Catalog" component={Catalog} />
+        <Stack.Screen name="Login" component={Login} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  text: {
-    color: 'white',
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-});
-

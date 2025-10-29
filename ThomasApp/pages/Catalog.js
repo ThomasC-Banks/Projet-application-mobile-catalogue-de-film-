@@ -1,10 +1,9 @@
 import { StyleSheet, Text, View} from 'react-native';
 
-export default function Register() {
+export default function Catalog() {
     return (
         <View style={styles.container}>
-        <Text>Register</Text>
-        <Button title="Se connecter" onPress={() => {}}></Button>
+        <Text>Catalog</Text>
         </View>
     );
 }
