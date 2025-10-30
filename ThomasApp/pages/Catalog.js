@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator, TextInput, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const API_KEY = '14eab7ac5e6cb898f642faf692738212';
 const URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
 
+const { width } = Dimensions.get('window');
+const NUM_COLUMNS = 3;
+const ITEM_MARGIN = 8;
+const ITEM_WIDTH = (width - ITEM_MARGIN * (NUM_COLUMNS * 2)) / NUM_COLUMNS;
+const ITEM_HEIGHT = ITEM_WIDTH * 1.5; // ratio pour ne pas écraser l’image
+
 export default function Catalog() {
   const [movies, setMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]); 
-  const [searchText, setSearchText] = useState(''); 
-  const [loading, setLoading] = useState(true); 
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  const [loading, setLoading] = useState(true);
 
-  // Charger les films au démarrage
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -28,7 +33,6 @@ export default function Catalog() {
     fetchMovies();
   }, []);
 
-  // Filtrer les films selon la recherche
   const handleSearch = (text) => {
     setSearchText(text);
     if (text === '') {
@@ -41,7 +45,6 @@ export default function Catalog() {
     }
   };
 
-  // Affichage pendant le chargement
   if (loading) {
     return (
       <LinearGradient colors={['#ff0000', '#800000', '#000000']} style={styles.container}>
@@ -49,7 +52,7 @@ export default function Catalog() {
       </LinearGradient>
     );
   }
-// Barre de recherche,liste de film
+
   return (
     <LinearGradient colors={['#ff0000', '#800000', '#000000']} style={styles.container}>
       <Text style={styles.title}>Movie Catalog</Text>
@@ -68,12 +71,14 @@ export default function Catalog() {
         <FlatList
           data={filteredMovies}
           keyExtractor={(item) => item.id.toString()}
-          numColumns={3}
+          numColumns={NUM_COLUMNS}
+          contentContainerStyle={styles.listContainer}
           renderItem={({ item }) => (
             <View style={styles.movieCard}>
               <Image
                 source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
                 style={styles.poster}
+                resizeMode="cover"
               />
               <Text style={styles.movieTitle} numberOfLines={2}>
                 {item.title}
@@ -106,15 +111,20 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     color: '#fff',
     marginBottom: 20,
+    fontSize: 16,
+  },
+  listContainer: {
+    paddingBottom: 100,
+    justifyContent: 'center',
   },
   movieCard: {
-    flex: 1,
-    margin: 5,
+    width: ITEM_WIDTH,
+    margin: ITEM_MARGIN,
     alignItems: 'center',
   },
   poster: {
-    width: 100,
-    height: 150,
+    width: ITEM_WIDTH,
+    height: ITEM_HEIGHT,
     borderRadius: 8,
   },
   movieTitle: {
