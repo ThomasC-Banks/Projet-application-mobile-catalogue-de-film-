@@ -1,34 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator, TextInput, Dimensions } from 'react-native';
+import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator, TextInput } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const API_KEY = '14eab7ac5e6cb898f642faf692738212'; 
+const API_KEY = '14eab7ac5e6cb898f642faf692738212';
 const URL = `https://api.themoviedb.org/3/movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
-
-const { width } = Dimensions.get('window');
-const ITEM_MARGIN = 8;
-const ITEM_WIDTH = (width - ITEM_MARGIN * 8) / 3; 
-const ITEM_HEIGHT = ITEM_WIDTH * 1.5; 
 
 export default function Catalog() {
   const [movies, setMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [filteredMovies, setFilteredMovies] = useState([]); 
+  const [searchText, setSearchText] = useState(''); 
+  const [loading, setLoading] = useState(true); 
 
+  // Charger les films au démarrage
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         const response = await fetch(URL);
         const data = await response.json();
-        if (data && Array.isArray(data.results)) {
-          setMovies(data.results);
-          setFilteredMovies(data.results);
-        } else {
-          console.error('Unexpected TMDB response format:', data);
-        }
+        setMovies(data.results);
+        setFilteredMovies(data.results);
       } catch (error) {
-        console.error('Error fetching movies:', error);
+        console.error('Erreur:', error);
       } finally {
         setLoading(false);
       }
@@ -36,18 +28,20 @@ export default function Catalog() {
     fetchMovies();
   }, []);
 
+  // Filtrer les films selon la recherche
   const handleSearch = (text) => {
     setSearchText(text);
     if (text === '') {
       setFilteredMovies(movies);
     } else {
       const filtered = movies.filter((movie) =>
-        movie.title?.toLowerCase().includes(text.toLowerCase())
+        movie.title.toLowerCase().includes(text.toLowerCase())
       );
       setFilteredMovies(filtered);
     }
   };
 
+  // Affichage pendant le chargement
   if (loading) {
     return (
       <LinearGradient colors={['#ff0000', '#800000', '#000000']} style={styles.container}>
@@ -55,10 +49,10 @@ export default function Catalog() {
       </LinearGradient>
     );
   }
-
+// Barre de recherche,liste de film
   return (
     <LinearGradient colors={['#ff0000', '#800000', '#000000']} style={styles.container}>
-      <Text style={styles.title}> Movie Catalog</Text>
+      <Text style={styles.title}>Movie Catalog</Text>
 
       <TextInput
         style={styles.searchInput}
@@ -75,28 +69,17 @@ export default function Catalog() {
           data={filteredMovies}
           keyExtractor={(item) => item.id.toString()}
           numColumns={3}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={styles.listContainer}
           renderItem={({ item }) => (
             <View style={styles.movieCard}>
               <Image
                 source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
                 style={styles.poster}
-                resizeMode="cover"
               />
               <Text style={styles.movieTitle} numberOfLines={2}>
                 {item.title}
               </Text>
             </View>
           )}
-          removeClippedSubviews={true} 
-          initialNumToRender={9}
-          windowSize={10}
-          getItemLayout={(data, index) => ({
-            length: ITEM_HEIGHT + 50, 
-            offset: (ITEM_HEIGHT + 50) * index,
-            index,
-          })}
         />
       )}
     </LinearGradient>
@@ -123,20 +106,15 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     color: '#fff',
     marginBottom: 20,
-    fontSize: 16,
-  },
-  listContainer: {
-    paddingBottom: 100,
-    justifyContent: 'center',
   },
   movieCard: {
-    width: ITEM_WIDTH,
-    margin: ITEM_MARGIN,
+    flex: 1,
+    margin: 5,
     alignItems: 'center',
   },
   poster: {
-    width: ITEM_WIDTH,
-    height: ITEM_HEIGHT,
+    width: 100,
+    height: 150,
     borderRadius: 8,
   },
   movieTitle: {
