@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image, FlatList, ActivityIndicator, TextInput, Dimensions } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  FlatList,
+  ActivityIndicator,
+  TextInput,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const API_KEY = '14eab7ac5e6cb898f642faf692738212';
@@ -9,14 +19,15 @@ const { width } = Dimensions.get('window');
 const NUM_COLUMNS = 3;
 const ITEM_MARGIN = 8;
 const ITEM_WIDTH = (width - ITEM_MARGIN * (NUM_COLUMNS * 2)) / NUM_COLUMNS;
-const ITEM_HEIGHT = ITEM_WIDTH * 1.5; // ratio pour ne pas écraser l’image
+const ITEM_HEIGHT = ITEM_WIDTH * 1.5;
 
-export default function Catalog() {
+export default function Catalog({ navigation }) {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [loading, setLoading] = useState(true);
 
+  // Charger les films depuis l’API TMDB
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -33,6 +44,7 @@ export default function Catalog() {
     fetchMovies();
   }, []);
 
+  // Recherche simple
   const handleSearch = (text) => {
     setSearchText(text);
     if (text === '') {
@@ -45,6 +57,7 @@ export default function Catalog() {
     }
   };
 
+  // Écran de chargement
   if (loading) {
     return (
       <LinearGradient colors={['#ff0000', '#800000', '#000000']} style={styles.container}>
@@ -53,6 +66,7 @@ export default function Catalog() {
     );
   }
 
+  // Affichage principal
   return (
     <LinearGradient colors={['#ff0000', '#800000', '#000000']} style={styles.container}>
       <Text style={styles.title}>Movie Catalog</Text>
@@ -74,7 +88,10 @@ export default function Catalog() {
           numColumns={NUM_COLUMNS}
           contentContainerStyle={styles.listContainer}
           renderItem={({ item }) => (
-            <View style={styles.movieCard}>
+            <TouchableOpacity
+              style={styles.movieCard}
+              onPress={() => navigation.navigate('MovieDetails', { movie: item })}
+            >
               <Image
                 source={{ uri: `https://image.tmdb.org/t/p/w500${item.poster_path}` }}
                 style={styles.poster}
@@ -83,7 +100,7 @@ export default function Catalog() {
               <Text style={styles.movieTitle} numberOfLines={2}>
                 {item.title}
               </Text>
-            </View>
+            </TouchableOpacity>
           )}
         />
       )}
@@ -115,7 +132,6 @@ const styles = StyleSheet.create({
   },
   listContainer: {
     paddingBottom: 100,
-    justifyContent: 'center',
   },
   movieCard: {
     width: ITEM_WIDTH,
@@ -139,3 +155,4 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
+
