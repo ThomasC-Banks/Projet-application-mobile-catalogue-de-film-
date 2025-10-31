@@ -15,7 +15,7 @@ export default function MovieDetails({ route }) {
         <Text style={styles.title}>{movie.title}</Text>
         <Text style={styles.overview}>{movie.overview || 'No description available.'}</Text>
         <Text style={styles.info}>Release date: {movie.release_date}</Text>
-        <Text style={styles.info}>Rating: ⭐ {movie.vote_average}/10</Text>
+        <Text style={styles.rating}>{movie.vote_average.toFixed(1)}/10</Text>
       </ScrollView>
     </LinearGradient>
   );
@@ -28,4 +28,10 @@ const styles = StyleSheet.create({
   title: { color: '#fff', fontSize: 24, fontWeight: 'bold', textAlign: 'center', marginBottom: 10 },
   overview: { color: '#ddd', fontSize: 16, textAlign: 'justify', marginBottom: 15 },
   info: { color: '#ccc', fontSize: 14, marginBottom: 5 },
+  rating: {
+  color: '#ffffffff',
+  fontSize: 16,
+  fontWeight: 'bold',
+  marginTop: 8,
+},
 });

@@ -21,11 +21,6 @@ export default function App() {
             title: '',
             headerTransparent: true,
             headerLeft: () => (
-              <TouchableOpacity onPress={() => navigation.navigate('Login')} style={{ marginLeft: 2 }}>
-                <Text style={{ color: 'white', fontSize: 15, fontWeight: 'bold' }}>Login</Text>
-              </TouchableOpacity>
-            ),
-            headerRight: () => (
               <Image
                 source={require('./assets/kitty.jpg')}
                 style={{ width: 40, height: 37, borderRadius: 17, marginRight: 1 }}
@@ -33,10 +28,27 @@ export default function App() {
             ),
           })}
         />
-        <Stack.Screen name="Catalog" component={Catalog} />
+
+        <Stack.Screen
+          name="Catalog"
+          component={Catalog}
+          options={({ navigation }) => ({
+            title: 'Movie Catalog',
+            headerRight: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate('Login')}
+                style={{ marginRight: 1, padding: 1 }}
+              >
+                <Text style={{ color: '#000000ff', fontWeight: 'bold' }}>Login</Text>
+              </TouchableOpacity>
+            ),
+          })}
+        />
+
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="MovieDetails" component={MovieDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
+

@@ -1,15 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  FlatList,
-  ActivityIndicator,
-  TextInput,
-  TouchableOpacity,
-  Dimensions,
-} from 'react-native';
+import {StyleSheet,Text,View,Image,FlatList,ActivityIndicator,TextInput,TouchableOpacity,Dimensions,} from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const API_KEY = '14eab7ac5e6cb898f642faf692738212';
@@ -155,4 +145,3 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
 });
-
