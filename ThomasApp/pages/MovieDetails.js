@@ -6,7 +6,7 @@ export default function MovieDetails({ route }) {
   const { movie } = route.params; // récupère les infos envoyées depuis Catalog
 
   return (
-    <LinearGradient colors={['#ff0000', '#800000', '#000000']} style={styles.container}>
+    <LinearGradient colors={['#ff0000', '#6a0dad', '#000000']} style={styles.container}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <Image
           source={{ uri: `https://image.tmdb.org/t/p/w500${movie.poster_path}` }}

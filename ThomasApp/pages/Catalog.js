@@ -47,18 +47,9 @@ export default function Catalog({ navigation }) {
     }
   };
 
-  // Écran de chargement
-  if (loading) {
-    return (
-      <LinearGradient colors={['#ff0000', '#800000', '#000000']} style={styles.container}>
-        <ActivityIndicator size="large" color="#fff" />
-      </LinearGradient>
-    );
-  }
-
   // Affichage principal
   return (
-    <LinearGradient colors={['#ff0000', '#800000', '#000000']} style={styles.container}>
+    <LinearGradient colors={['#ff0000', '#6a0dad', '#000000']} style={styles.container}>
       <Text style={styles.title}>Movie Catalog</Text>
 
       <TextInput

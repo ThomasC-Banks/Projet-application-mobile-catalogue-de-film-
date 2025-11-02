@@ -17,18 +17,19 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={Home}
-          options={({ navigation }) => ({
-            title: '',
+          options={{
+            title: 'CineVerse',
             headerTransparent: true,
+            headerTitleAlign: 'center',
+            headerTintColor: '#fff', 
             headerLeft: () => (
               <Image
                 source={require('./assets/kitty.jpg')}
-                style={{ width: 40, height: 37, borderRadius: 17, marginRight: 1 }}
+                style={{ width: 45, height: 35, borderRadius: 15, marginLeft: 0 }}
               />
             ),
-          })}
+          }}
         />
-
         <Stack.Screen
           name="Catalog"
           component={Catalog}
@@ -37,18 +38,16 @@ export default function App() {
             headerRight: () => (
               <TouchableOpacity
                 onPress={() => navigation.navigate('Login')}
-                style={{ marginRight: 1, padding: 1 }}
+                style={{ marginRight: 10, padding: 5 }}
               >
-                <Text style={{ color: '#000000ff', fontWeight: 'bold' }}>Login</Text>
+                <Text style={{ color: '#000', fontWeight: 'bold' }}>Login</Text>
               </TouchableOpacity>
             ),
           })}
         />
-
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="MovieDetails" component={MovieDetails} />
       </Stack.Navigator>
     </NavigationContainer>
   );
 }
-

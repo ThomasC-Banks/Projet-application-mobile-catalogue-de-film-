@@ -62,10 +62,9 @@ export default function Home({ navigation }) {
       <FloatingGhost size={45} delay={3000} />
       <FloatingGhost size={35} delay={1500} />
 
+      {/* Contenu centré avec seulement les boutons */}
       <View style={styles.centerContent}>
-        <Text style={styles.text}>Welcome</Text>
-
-        {/* Bouton View Catalog au-dessus */}
+        {/* Bouton View Catalog */}
         <TouchableOpacity
           style={styles.catalogButton}
           onPress={() => navigation.navigate('Catalog')}
@@ -73,7 +72,7 @@ export default function Home({ navigation }) {
           <Text style={styles.catalogText}>View Catalog</Text>
         </TouchableOpacity>
 
-        {/* Bouton Login juste en dessous */}
+        {/* Bouton Login */}
         <TouchableOpacity
           style={styles.loginButton}
           onPress={() => navigation.navigate('Login')}
@@ -95,26 +94,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  text: {
-    color: 'white',
-    fontSize: 30,
-    fontWeight: 'bold',
-    marginBottom: 40,
-  },
   catalogButton: {
-    backgroundColor: '#9e878a',
+    backgroundColor: 'rgba(255,255,255,0.1)',
     paddingVertical: 14,
     paddingHorizontal: 60,
     borderRadius: 30,
     marginBottom: 20,
   },
   catalogText: {
-    color: '#ffffffff',
+    color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
   },
   loginButton: {
-    backgroundColor: '#9e878a',
+    backgroundColor: 'rgba(255,255,255,0.1)',
     paddingVertical: 12,
     paddingHorizontal: 50,
     borderRadius: 25,
@@ -125,5 +118,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
 });
-
-

@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 export default function Login() {
 return (
     <LinearGradient
-        colors={['#ff0000', '#800000', '#000000']}
+        colors={['#ff0000', '#6a0dad', '#000000']}
         style={styles.container}
     >
     <KeyboardAvoidingView
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 },
     button: {
     width: '100%',
-    backgroundColor: '#800000',
+    backgroundColor: 'rgba(255,255,255,0.1)',
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
